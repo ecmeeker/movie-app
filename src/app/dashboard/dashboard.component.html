@@ -1,0 +1,10 @@
+<h2>Top Movies</h2>
+<div class="movies-menu">
+  <div>
+      <div *ngFor="let movie of movies">
+        <a routerLink="/detail/{{movie.id}}" class="list-group-item-action col-sm-6">
+            {{movie.name}}
+        </a>
+      </div>
+    </div>
+</div>

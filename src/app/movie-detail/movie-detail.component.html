@@ -1,0 +1,30 @@
+<div *ngIf="movie">
+    <h2>{{ movie.name | uppercase }}</h2>
+
+    <div>
+        <label class="row form-group" for="movie-name">Movie name: </label>
+        <input id="movie-name" class="col-sm-9" [(ngModel)]="movie.name" placeholder="name">
+    </div>
+    <div>
+        <label class="row form-group" for="movie-genre">Genre: </label>
+        <input id="movie-genre" class="col-sm-9" [(ngModel)]="movie.genre" placeholder="genre">
+    </div>
+    <div>
+        <label class="row form-group" for="movie-platform">Platform: </label>
+        <input id="movie-platform" class="col-sm-9" [(ngModel)]="movie.platform" placeholder="platform">
+    </div>
+    <div>
+        <label class="row form-group" for="movie-description">Description: </label>
+        <textarea id="movie-description" class="col-sm-9" rows="3" [(ngModel)]="movie.description" placeholder="description"></textarea>
+    </div>
+    <div>
+        <label class="row form-group" for="movie-watched">Watched?: </label>
+        <input id="movie-watched" class="col-sm-9" [(ngModel)]="movie.watched" placeholder="watched">
+    <div>
+        <label class="row form-group" for="movie-date-watched">Date Watched: </label>
+        <input id="movie-date-watched" class="col-sm-9" type="date" [(ngModel)]="movie.dateWatched">
+    </div>
+</div>
+
+<button type="button" (click)="goBack()">Back</button>
+<button type="button" (click)="save()">Save</button>

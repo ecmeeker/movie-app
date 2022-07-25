@@ -1,0 +1,41 @@
+<h2>Movies</h2>
+
+<div class="col-sm-6">
+    <ul class="movies list-group-flush">
+        <li *ngFor="let movie of movies" class="list-group-item list-group-item-action" style="padding: 0;">
+            <a routerLink="/detail/{{movie.id}}" class="list-group-item list-group-item-action col-sm-9">
+            <span id="name" placeholder="name">{{ movie.name }}</span>
+            <button type="button" class="delete btn" title="delete movie" (click)="delete(movie)"><small>Delete</small></button>
+            </a> 
+        </li>
+    </ul>
+</div>
+
+<div>
+    <form>
+        <div class="row form-group">
+            <label for="new-movie-name" class="col-sm-3">Movie name</label>
+            <input type="text" id="new-movie-name" class="form-control col-sm-9" #movieName />
+        </div>
+        <div class="row form-group">
+            <label for="new-movie-genre" class="col-sm-3">Genre</label>
+            <input type="text" id="new-genre"  class="form-control col-sm-9" #movieGenre />
+        </div>
+        <div class="row form-group">
+            <label for="new-movie-platform" class="col-sm-3">Platform</label>
+            <input type="text" id="new-movie-platform" class="form-control col-sm-9" #moviePlatform />
+        </div>
+        <div class="row form-group">
+            <label for="new-movie-description" class="col-sm-3">Description</label>
+            <textarea class="form-control col-sm-9" rows="3" id="new-movie-description" #movieDescription ></textarea>
+        </div>
+        <div class="row form-group">
+            <label for="new-movie-date" class="col-sm-3">Date Watched</label>
+            <input type="date" id="new-movie-date" class="form-control col-sm-9"/>
+        </div>
+        <div class="row form-group">
+            <input type="submit" value="Add Movie" class="btn btn-secondary"
+            (click)="add(movieName.value, movieGenre.value, moviePlatform.value, movieDescription.value)" >
+        </div>
+    </form>
+</div>
