@@ -12,20 +12,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class MovieService {
   private moviesUrl = 'http://localhost:8000/movies';
   private movieUrl = 'http://localhost:8000/movie';
+  private movieDbUrl = "https://api.themoviedb.org/3/search/";
+  private apiKey = "2eb5bf99a059f893c4b79118ca3b20a0";
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   }
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
-
-  // getMovies(): Observable<any[]>{
-  //   return this.http.get<Movie[]>(this.moviesUrl, this.httpOptions)
-  //           .pipe(
-  //             map(movies => <Movie[]> movies),
-  //             tap(_ => this.log('fetched movies: ')),
-  //             catchError(this.handleError<Movie[]>('getMovies', [])),
-  //           );
-  // }
 
   getMovies(): Observable<Movie[]> {
     return this.http.get<Movie[]>(this.moviesUrl, this.httpOptions)
@@ -82,6 +75,16 @@ export class MovieService {
       tap(_ => this.log(`deleted movie id=${movie.id}`)),
       catchError(this.handleError<Movie>('deleteMovie'))
     )
+  }
+
+  getMovieInfo(name: string): Observable<any> {
+    const url = `${this.movieDbUrl}movie?query=${name}&api_key=${this.apiKey}`;
+    return this.http.get<any>(url, this.httpOptions)
+                    .pipe(
+                      map((data: any) => {
+                        return data;
+                      }),
+                    ); 
   }
 
   private log(message: string) {

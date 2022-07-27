@@ -27,20 +27,28 @@ export class MoviesComponent implements OnInit {
         },
         error: (e) => console.error(e)
       });
+      this.getMovieInfo("caddyshack");
+    
       return this.movies;
   }
 
   add(name: string, genre: string, platform: string, description: string): Movie[] {
     var id: number = 0;
-    this.addMovie(name, genre, platform, description);
+    let res = this.getMovieInfo(name);
+    if (res.length == 0){
+      res.push("0");
+      res.push(description);
+    }
+    this.addMovie(name, genre, res[0], platform, res[1]);
     
     this.getLast(id);
     return this.getMovies();
   }
 
-  addMovie(name: string, genre: string, platform: string, description: string): void {
+  addMovie(name: string, genre: string, popularity: string, platform: string, description: string): void {
     if (!(name.trim() || genre || platform || description)) {return;}
-    this.movieService.addMovie({id: 0, name, genre, platform, description, watched: false, dateWatched: '' } as Movie)
+    this.getMovieInfo(name);
+    this.movieService.addMovie({id: 0, name, genre, popularity, platform, description, watched: false, dateWatched: '' } as Movie)
         .subscribe(movie => {
           this.movies.push(movie);
           console.log(this.movies);
@@ -77,6 +85,20 @@ export class MoviesComponent implements OnInit {
     this.movies = this.movies.filter(m => m !== movie);
     this.movieService.deleteMovie(movie).subscribe();
   }
+
+  getMovieInfo(name: string): string[] {
+    let res: string[] = [];
+    this.movieService.getMovieInfo(name)
+      .subscribe({
+        next: (data: any) => {
+          let info = data.results[0];
+          res[0] = info.vote_average;
+          res[1] = info.overview;
+        },
+        error: (e) => console.error(e)
+      });
+    return res;
+}
 
 }
 
